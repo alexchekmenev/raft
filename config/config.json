@@ -1,0 +1,16 @@
+{
+  "router": {
+    "name": "router1",
+    "address": "localhost:9000"
+  },
+  "clusters": [
+    {
+      "name": "cluster1",
+      "members": [
+        {"name": "srv1", "address": "localhost:9001"},
+        {"name": "srv2", "address": "localhost:9002"},
+        {"name": "srv3", "address": "localhost:9003"}
+      ]
+    }
+  ]
+}
