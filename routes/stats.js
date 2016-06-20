@@ -35,7 +35,7 @@ router.get('/log', function (req, res, next) {
 /**
  * Returns state of every node in the system
  */
-router.get('/log', function (req, res, next) {
+router.get('/state', function (req, res, next) {
     console.log('GET index');
     var clusters = config.get('clusters');
     async.parallel((function () {

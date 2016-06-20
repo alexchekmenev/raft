@@ -1,9 +1,11 @@
 var express = require('express');
 var router = express.Router();
+var quorum = require('../libs/quorum');
+var console = require('../libs/console')(module);
 
-/* GET users listing. */
 router.get('/', function(req, res, next) {
-    res.json(req.app.get('log'));
+    var raft = req.app.get('raft');
+    res.json(raft.journal.log);
 });
 
 module.exports = router;

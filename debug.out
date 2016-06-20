@@ -1,2 +1,0 @@
-ROLE = router
-structure = [ { name: 'cluster1', members: [ [Object], [Object], [Object] ] } ]

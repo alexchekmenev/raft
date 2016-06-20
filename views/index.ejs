@@ -1,11 +1,24 @@
 <!DOCTYPE html>
 <html>
   <head>
-    <title><%= title %></title>
-    <link rel='stylesheet' href='/stylesheets/style.css' />
+    <title>Distributed Key-Value Storage</title>
   </head>
   <body>
-    <h1><%= title %></h1>
-    <p>Welcome to <%= title %></p>
+    Current leader: <span id="leader"></span><br>
+
+    <form id="send-form">
+      Action <input type="text" name="action"><br>
+      Key <input type="text" name="key"><br>
+      Value <input type="text" name="value"><br>
+      <input type="submit" value="Send">
+    </form>
+    <div id="status"></div><br>
+
+    <div id="container"></div>
+
+    <script src="https://code.jquery.com/jquery-1.12.4.min.js"
+            integrity="sha256-ZosEbRLbNQzLpnKIkEdrPv7lOy9C27hHQ+Xp8a4MxAQ="
+            crossorigin="anonymous"></script>
+    <script src="/js/main.js"></script>
   </body>
 </html>

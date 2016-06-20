@@ -1,11 +1,14 @@
 var fs = require('fs');
 var path = require('path');
+var Q = require('q');
 
 module.exports = function() {
 
     function Journal() {
         this.pathToJournal = null;
         this.log = [];
+        this.currentTerm = 0;
+        this.votedFor = null;
     }
 
     /**
@@ -22,18 +25,49 @@ module.exports = function() {
                 fs.readFile(journal.pathToJournal, 'utf8',
                     function (err, content) {
                         if (err) return callback(err);
-                        journal.log = JSON.parse(content);
-                        callback(null, journal.log);
+                        var o = {};
+                        if (content != null && content != '') {
+                            o = JSON.parse(content);
+                        }
+                        journal.log = o.log || [{"term":0,"action":null}];
+                        journal.currentTerm = o.currentTerm || 0;
+                        journal.votedFor = o.votedFor;
+                        callback(null, journal);
                     });
             });
         })(this);
     };
+
     /**
      * Saves current journal state to the associated file
+     * @param state
      * @param callback
      */
-    Journal.prototype.save = function (callback) {
-        fs.writeFile(path, JSON.stringify(this.log), callback);
+    Journal.prototype.save = function (state, callback) {
+        this.currentTerm = state.currentTerm;
+        this.votedFor = state.votedFor;
+        this.log = [];
+        var self = this;
+        state.log.forEach(function(entry) {
+            self.log.push(entry);
+        });
+        fs.writeFile(this.pathToJournal, JSON.stringify(this), callback);
+    };
+
+    /**
+     * Synchronously saves current journal state to the associated file
+     * @param state
+     * @returns {*}
+     */
+    Journal.prototype.saveSync = function (state) {
+        this.currentTerm = state.currentTerm;
+        this.votedFor = state.votedFor;
+        this.log = [];
+        var self = this;
+        state.log.forEach(function(entry) {
+            self.log.push(entry);
+        });
+        fs.writeFileSync(this.pathToJournal, JSON.stringify(this));
     };
 
     return new Journal();

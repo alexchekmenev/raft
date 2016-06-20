@@ -12,5 +12,6 @@
         {"name": "srv3", "address": "localhost:9003"}
       ]
     }
-  ]
+  ],
+  "electionTimeout": 300
 }
